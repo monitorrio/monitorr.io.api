@@ -26,7 +26,7 @@ namespace Web.Infrastructure.Migrations.Seeders.Mongo
                     var e = new Role
                     {
                         RoleName = x.ToEnum<RoleName>(),
-                        ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket")
+                        ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr")
                     };
                     repo.Insert(e);
                 }
