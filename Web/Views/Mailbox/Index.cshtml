@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid inbox">
+    <div class="page-header">
+        <h1>Inbox</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="panel panel-default clearfix dashboard-stats rounded">
+                        <i class="fa fa-file bg-gray stats-icon"></i>
+                        <h3 class="transit" data-bind="text:VM.FilesCount"></h3>
+                        <!-- ko if: VM.FilesCount() > 1 -->
+                        <p class="text-muted transit">Total Files</p>
+                        <!-- /ko -->
+                        <!-- ko if: VM.FilesCount() < 2 -->
+                        <p class="text-muted transit"> File</p>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="panel panel-default clearfix dashboard-stats rounded">
+                        <i class="fa fa-file bg-info stats-icon"></i>
+                        <h3 class="transit" data-bind="text:VM.NewFilesCount"></h3>
+                        <!-- ko if: VM.NewFilesCount() > 1 -->
+                        <p class="text-muted transit">New Files</p>
+                        <!-- /ko -->
+                        <!-- ko if:  VM.NewFilesCount() < 2 -->
+                        <p class="text-muted transit">New File</p>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <hr class="clean">
+            <div class="row">
+                <div class="col-md-9 col-xs-12">
+                    <div class="btn-group bg-padded">
+                        <button class="btn btn-not-downloaded" type="button" data-bind="click: VM.toggleIsNotDownloaded">
+                            <!-- ko if: VM.IsNotDownloaded() == true -->
+                            <span class="fa  fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko if: VM.IsNotDownloaded() == false -->
+                            <span class="fa fa-square-o"></span>
+                            <!-- /ko -->
+                            Not Downloaded
+                        </button>
+                        <button class="btn btn-downloaded" type="button" data-bind="click: VM.toggleIsDownloaded">
+                            <!-- ko if: VM.IsDownloaded() == true -->
+                            <span class="fa  fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko if: VM.IsDownloaded() == false -->
+                            <span class="fa fa-square-o"></span>
+                            <!-- /ko -->
+                            Downloaded
+                        </button>
+                        <button class="btn btn-downloaded-to-be-deleted" type="button" data-bind="click: VM.toggleIsDownloadedToBeDeleted">
+                            <!-- ko if: VM.IsDownloadedToBeDeleted() == true -->
+                            <span class="fa  fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko if: VM.IsDownloadedToBeDeleted() == false -->
+                            <span class="fa fa-square-o"></span>
+                            <!-- /ko -->
+                            Downloaded, to be Deleted
+                        </button>
+                        <button class="btn btn-not-downloaded-to-be-deleted" type="button" data-bind="click: VM.toggleIsNotDownloadedToBeDeleted">
+                            <!-- ko if: VM.IsNotDownloadedToBeDeleted() == true -->
+                            <span class="fa  fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko if: VM.IsNotDownloadedToBeDeleted() == false -->
+                            <span class="fa fa-square-o"></span>
+                            <!-- /ko -->
+                            Not Downloaded, to be Deleted
+                        </button>
+                    </div>
+                    <div class="btn-group visible-lg-inline-block">
+                        <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-default tooltip-btn" type="button" data-original-title="Delete" data-bind="click:VM.deleteFiles"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <button title="Download" class="btn btn-info pull-right margin-left-x10" type="button" data-bind="click:VM.downloadPackage"><i class="fa fa-download"></i> Download</button>
+                </div>
+            </div>
+            <hr class="clean">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="inbox-datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>File Name</th>
+                                    <th>File ID</th>
+                                    <th>Size</th>
+                                    <th>Sent By</th>
+                                    <th>Company</th>
+                                    <th>Comments</th>
+                                    <th>Uploaded Date</th>
+                                    <th>Expire Date</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody colspan="9" class="dataTables_empty"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe style="display: none;" id="fileDelegate">
+    <form method="post" action="/api/files">
+        <input type="hidden" name="criteria" />
+    </form>
+</iframe>
+<iframe style="display: none;" id="packageDelegate">
+    <form method="post" action="/api/packages?fileids=">
+        <input type="hidden" name="packageCriteria" />
+    </form>
+</iframe>
+
+<script src="~/src/js/app/component/mailbox/InboxVM.js"></script>

@@ -1,0 +1,13 @@
+"PageAccessControlID","PageName","SecurityLevelApproved","UserTypeIDApproved","UserIDsApproved"
+1,"OEMAHome",," 1, 2, ",
+2,"OEMAHomeJV",," 4, ",
+3,"FileUpload",," 1, 2, ",
+4,"Mailbox",," 1, 2, ",
+5,"UserLookUp",," 1, 2, ",
+6,"AdminJVUploadDownloadHistory",," 4, "," 9677, 9889,"
+7,"AdminSEUploadDownloadHistory","5, 100,",,
+8,"AdminManageRegionalFordUsers","4, 5, 80, 100,",,
+9,"AdminFordUserRegistration","4, 5, 80, 100,",,
+10,"AdminManageUserAccess","4, 5, 80, 100,",,
+11,"AdminFordUsersAddedDeleted","100,",,
+12,"AdminFordDuplicates","100,",,

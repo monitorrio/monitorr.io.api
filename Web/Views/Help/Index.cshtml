@@ -1,0 +1,116 @@
+﻿@using System.Configuration
+@using Core.Configuration
+@using Web.Infrastructure.Extensions
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationName"] + " Support";
+}
+<div id='HelpVM' class="warper container-fluid help">
+    <div class="page-header">
+        <h1>@ViewBag.Title <small><i class="fa fa-question-circle tooltip-btn" data-placement="right" data-toggle="tooltip" data-original-title="Help - Customer Support."></i></small></h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading un-bold">
+                    <h4>Supplier Users</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group no-margn nicescroll todo-list">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Toll Free : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("TollFree", "1-888-788-7988");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Local : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("Local", "1-313-564-4820");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Email : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("ContactSupportEmail", "support@oem-advantage.net");</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading un-bold">
+                    <h4>Ford Users</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group no-margn nicescroll todo-list">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Toll Free : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("TollFree", "1-888-788-7988");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Email : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("ContactSupportEmail", "support@oem-advantage.net");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Ford FNA : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("FordFNA", "cdxhelp@ford.com");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Ford FOE : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("FordFOE", "gsieu@ford.com");</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Ford FAP : </strong>
+                                </div>
+                                <div class="col-xs-9">
+                                    <a class="text-primary" href="#">@AppDeployment.Instance.AppSetting("FordFAP", "foafdx@ford.com");</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ Html.RenderModule(ModuleExtensions.ModuleType.Disclaimer); }
+</div>

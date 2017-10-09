@@ -1,0 +1,413 @@
+﻿@using System.Configuration
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "Contacts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid contacts">
+    <div class="page-header">
+        <h1>
+            @ViewBag.Title <small>
+                <i class="fa fa-question-circle"></i>
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#favorites" role="tab" data-toggle="tab">Favorites</a>
+                </li>
+                <li>
+                    <a href="#groups" role="tab" data-toggle="tab">Groups</a>
+                </li>
+                <li>
+                    <a href="#notificationlists" role="tab" data-toggle="tab">Notification Lists</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Favorites Tab -->
+                <div class="panel panel-default tab-pane tabs-up active" id="favorites">
+
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active">
+                                    <a href="#search-contacts-table" role="tab" data-toggle="tab">Add To Favorites</a>
+                                </li>
+                                <li>
+                                    <a href="#user-favorites-table" role="tab" data-toggle="tab">Current Favorites</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <!-- search-contacts-table -->
+                                <div class="panel panel-default tab-pane tabs-up active" id="search-contacts-table">
+
+                                    <div class="panel-body">
+                                        <table id="search-contacts-datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Company</th>
+                                                    <th>Phone</th>
+                                                    <th>Region</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody colspan="8" class="dataTables_empty"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel-footer">
+                                    </div>
+                                </div>
+                                <!-- user-favorites-table -->
+                                <div class="panel panel-default tab-pane tabs-up" id="user-favorites-table">
+
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table id="favorites-datatable" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Username</th>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Email</th>
+                                                        <th>Company</th>
+                                                        <th>Remove Favorite</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody colspan="6" class="dataTables_empty"></tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+                                    <div class="panel-footer">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                        </div>
+
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                <!-- Groups Tab -->
+                <div class="panel panel-default tab-pane tabs-up" id="groups">
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clean">Groups</div>
+                                    <div class="panel-body no-padd">
+                                        <div class="list-group no-margn group-nav scrollable" data-bind="foreach: VM.Groups">
+                                            <a class="list-group-item on" href="#" data-bind="attr: {  id : id  }, click:VM.setCurrentGroup">
+                                                <span class="badge bg-danger text-white" data-bind="attr: {  id : id  }, click:VM.deleteGroup"><i class="fa fa-trash"></i></span>
+                                                <span class="badge bg-blue text-white" data-bind="text:MemberCount"></span>
+                                                <span data-bind="text: Name"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <hr class="xs">
+                                    <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#addGroup">Add New</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <h4>Group Name:</h4>&nbsp; <h3 data-bind="text:VM.CurrentGroupName"></h3>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div data-bind="visible: VM.CurrentGroupName() && VM.CurrentGroupName().length > 0">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon cke_dark_background">
+                                                        <input type="radio" name="GroupType" value="Private" data-bind="checked: GroupModel.GroupType">
+                                                    </span>
+                                                    <label class="form-control">Current User Only</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="GroupType" value="Shared" data-bind="checked: GroupModel.GroupType">
+                                                    </span>
+                                                    <label class="form-control">Used By Permision</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="GroupType" value="Public" data-bind="checked: GroupModel.GroupType">
+                                                    </span>
+                                                    <label class="form-control">Used By All Users</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <button class="btn btn-primary" type="button" data-bind="click:VM.updateGroupType">Update Permission</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="active">
+                                                <a href="#searchmembers" role="tab" data-toggle="tab">Search Users</a>
+                                            </li>
+                                            <li>
+                                                <a href="#groupmembers" role="tab" data-toggle="tab">Current Group Members</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <!-- Search Members -->
+                                            <div class="panel panel-default tab-pane tabs-up active" id="searchmembers">
+
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="groups-datatable" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Username</th>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Company</th>
+                                                                    <th>Phone</th>
+                                                                    <th>Region</th>
+                                                                    <th>Favorite</th>
+                                                                    <th>Add</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody colspan="9" class="dataTables_empty"></tbody>
+                                                        </table>
+                                                    </div>
+                                                    </div>
+                                                <div class="panel-footer">
+                                                </div>
+                                            </div>
+                                            <!-- Group Members -->
+                                            <div class="panel panel-default tab-pane tabs-up" id="groupmembers">
+
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="groups-members-datatable" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Username</th>
+                                                                    <th>First Name</th>
+                                                                    <th>Last Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Company</th>
+                                                                    <th>Phone</th>
+                                                                    <th>Region</th>
+                                                                    <th>Is Favorite</th>
+                                                                    <th>Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody colspan="9" class="dataTables_empty"></tbody>
+                                                        </table>
+                                                    </div>
+                                                    </div>
+                                                <div class="panel-footer">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                <!-- Notification Lists -->
+                <div class="panel panel-default tab-pane tabs-up" id="notificationlists">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Notification Lists</div>
+                                    <div class="panel-body no-padd">
+
+                                        <div class="list-group no-margn notificationlist-nav scrollable" data-bind="foreach: VM.NotificationLists">
+                                            <a class="list-group-item on" href="#" data-bind="attr: {  id : id  }, click:VM.setCurrentNotificationList">
+                                                <span class="badge bg-danger text-white" data-bind="attr: {  id : id  }, click:VM.deleteNotificationList"><i class="fa fa-trash"></i></span>
+                                                <span class="badge bg-blue text-white" data-bind="text:NotificationListEmailCount"></span>
+                                                <span data-bind="text: Name"></span>
+                                            </a>
+                                        </div>
+
+                                        <hr class="xs">
+                                        <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#addNotificationList">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4>Notification List Name:</h4>&nbsp; <h3 data-bind="text:VM.CurrentNotificationListName"></h3>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="active">
+                                                <a href="#search-notification-members" role="tab" data-toggle="tab">Search Users</a>
+                                            </li>
+                                            <li>
+                                                <a href="#notification-members" role="tab" data-toggle="tab">Current Notification List Members</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <!-- Search Users -->
+                                            <div class="panel panel-default tab-pane tabs-up active" id="search-notification-members">
+
+                                                <div class="panel-body">
+                                                    <table id="search-users-datatable" class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Email</th>
+                                                                <th>Add</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody colspan="2" class="dataTables_empty"></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="panel-footer">
+                                                </div>
+                                            </div>
+                                            <!-- Notification List Members -->
+                                            <div class="panel panel-default tab-pane tabs-up" id="notification-members">
+
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="notificationlist-members-datatable" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Email</th>
+                                                                    <th>Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody colspan="2" class="dataTables_empty"></tbody>
+                                                        </table>
+                                                    </div>
+                                                    </div>
+                                                <div class="panel-footer">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Group Modal -->
+<div class="modal fade" id="addGroup" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="groupModalLabe">New Group</h4>
+            </div>
+            <div class="modal-body">
+
+                <form role="form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="GroupName">Group Name</label>
+                                <input type="text" name="GroupName" id="GroupName" class="form-control" placeholder="Name of Group" data-bind="value:GroupModel.Name">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon cke_dark_background">
+                                                <input type="radio" name="GroupType" value="Private"  data-bind="checked: GroupModel.GroupType">
+                                            </span>
+                                        <label class="form-control">Current User Only</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                                <input type="radio" name="GroupType" value="Shared" data-bind="checked: GroupModel.GroupType">
+                                            </span>
+                                        <label class="form-control">Used By Permision</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                                <input type="radio" name="GroupType" value="Public" data-bind="checked: GroupModel.GroupType">
+                                            </span>
+                                        <label class="form-control">Used By All Users</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click:VM.addGroup">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Notification List Modal -->
+<div class="modal fade" id="addNotificationList" tabindex="-1" role="dialog" aria-labelledby="notificationListModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="notificationListModalLabel">New Notification List</h4>
+            </div>
+            <div class="modal-body">
+
+                <form role="form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="NotificationListName">Notification List Name</label>
+                                <input type="text" name="NotificationListName" id="NotificationListName" class="form-control" placeholder="Name of Notification List" data-bind="value:NotificationListModel.Name">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bind="click:VM.addNotificationList">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="~/src/js/app/component/contacts/ContactsVM.js"></script>

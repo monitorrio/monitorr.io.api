@@ -1,0 +1,137 @@
+﻿@using System.Configuration
+@using Web.Infrastructure.Static
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "User Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid user-management">
+    <div class="page-header">
+        <h1>@ViewBag.Title <small><i class="fa fa-question-circle"></i></small></h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" role="tablist">
+                @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                {
+                    <li class="active"><a href="#companies" role="tab" data-toggle="tab">Companies</a></li>
+                    <li><a href="#users" role="tab" data-toggle="tab">Users</a></li>
+                }
+                else
+                {
+                    <li class="active"><a href="#users" role="tab" data-toggle="tab">Users</a></li>
+                }
+            </ul>
+
+            <div class="tab-content">
+                @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                {
+                    <!-- Companies Tab -->
+                    <div class="panel panel-default tab-pane tabs-up active" id="companies">
+
+                        <div class="panel-body">
+                            <table id="companies-datatable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th># of licenses</th>
+                                </tr>
+                                </thead>
+                                <tbody colspan="5" class="dataTables_empty">
+                                <img class="loader" src="http://preloaders.s3.amazonaws.com/294.gif" alt="loading data"/>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                      <!-- Users Tab -->
+                    <div class="panel panel-default padd-t-sm tab-pane tabs-up" id="users">
+                        <div class="panel-heading">
+                            <div class="btn-group">
+                                <select id="UserFilter" class="form-control input-sm" data-bind="options: VM.UserFilters, optionsText: 'Name', optionsValue: 'Name', value: VM.UserFilter"></select>
+                            </div>
+                            <div class="btn-group">
+                                <select id="UserTypes" class="form-control input-sm" data-bind="options: VM.UserTypes, optionsText: 'Name', optionsValue: 'Name', optionsCaption: 'User Type', value: VM.UserType"></select>
+                            </div>
+                            <a class="toggle-vis btn btn-info btn-sm" data-bind="click: VM.drawUsers">Go</a>
+                        </div>
+                        <div class="panel-body">
+                            <table id="users-datatable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>User Name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Active</th>
+                                        <th>Security Level</th>
+                                        <th>Time Zone</th>
+                                        <th>Region</th>
+                                        <th>User Locked</th>
+                                        <th>PW Changed</th>
+                                        <th>Profile Review</th>
+                                        <th>SE User</th>
+                                    </tr>
+                                </thead>
+                                <tbody colspan="14" class="dataTables_empty">
+                                    <img class="loader" src="http://preloaders.s3.amazonaws.com/294.gif" alt="loading data" />
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                }
+                else
+                {
+                      <!-- Users Tab -->
+                    <div class="panel panel-default padd-t-sm tab-pane tabs-up active" id="users">
+                        <div class="panel-heading">
+                            <div class="btn-group">
+                                <select id="UserFilter" class="form-control input-sm" data-bind="options: VM.UserFilters, optionsText: 'Name', optionsValue: 'Name', value: VM.UserFilter"></select>
+                            </div>
+                            <div class="btn-group">
+                                <select id="UserTypes" class="form-control input-sm" data-bind="options: VM.UserTypes, optionsText: 'Name', optionsValue: 'Name', optionsCaption: 'User Type', value: VM.UserType"></select>
+                            </div>
+                            <a class="toggle-vis btn btn-info btn-sm" data-bind="click: VM.drawUsers">Go</a>
+                        </div>
+                        <div class="panel-body">
+                            <table id="users-datatable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>User Name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Active</th>
+                                        <th>Security Level</th>
+                                        <th>Time Zone</th>
+                                        <th>Region</th>
+                                        <th>User Locked</th>
+                                        <th>PW Changed</th>
+                                        <th>Profile Review</th>
+                                        <th>SE User</th>
+                                    </tr>
+                                </thead>
+                                <tbody colspan="14" class="dataTables_empty">
+                                    <img class="loader" src="http://preloaders.s3.amazonaws.com/294.gif" alt="loading data" />
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                }
+              
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/src/js/app/component/admin/UserManagementVM.js"></script>

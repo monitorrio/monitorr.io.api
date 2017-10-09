@@ -1,0 +1,35 @@
+﻿@using System.Configuration
+@using Web.Infrastructure.Extensions
+@using Web.Models
+@model RegisterViewModel
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationName"] + " Registration Confirmation";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<div class="container supplier-registration">
+    @{ Html.RenderModule(ModuleExtensions.ModuleType.AlertPlaceholder); }
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <div class="panel panel-default panel-auth">
+                <div class="panel-heading">
+                    <img src="~/src/images/core/logo50.png" alt="@ConfigurationManager.AppSettings["ApplicationName"]">
+                    <h3>@ViewBag.Title</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group text-center">
+                            Your account has been created.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                @Html.ActionLink("Login to your account", "Login", "Account",null, new { @class = "pull-right", area = "" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

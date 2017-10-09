@@ -1,0 +1,202 @@
+﻿@using System.Configuration
+@model string
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="content" class="log">
+    <input type="hidden" value="@Request.QueryString.Get("id")" name="logId" />
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+
+                <!-- PAGE HEADER -->
+                <i class="fa-fw fa fa-file-text-o"></i>
+                Log
+                <span>
+                    >
+                    <label data-bind="text:Log.Name"></label>
+                </span>
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+            <!-- sparks -->
+            @*            <ul id="sparks">*@
+            @*                <li class="sparks-info">*@
+            @*                    <h5> Errors Count <span class="txt-color-blue" data-bind="text:Log.ErrorCount"></span></h5>*@
+            @*                    <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">*@
+            @*                        1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471*@
+            @*                    </div>*@
+            @*                </li>*@
+            @*                <li class="sparks-info">*@
+            @*                    <h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>*@
+            @*                    <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">*@
+            @*                        110,150,300,130,400,240,220,310,220,300, 270, 210*@
+            @*                    </div>*@
+            @*                </li>*@
+            @*                <li class="sparks-info">*@
+            @*                    <h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>*@
+            @*                    <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">*@
+            @*                        110,150,300,130,400,240,220,310,220,300, 270, 210*@
+            @*                    </div>*@
+            @*                </li>*@
+            @*            </ul>*@
+            <!-- end sparks -->
+        </div>
+    </div>
+
+
+    <section id="widget-grid" class="">
+        <div class="jarviswidget" id="wid-id-8" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-sortable="false">
+            <header>
+                <h2 data-bind="text:Log.Name"></h2>
+                <ul class="nav nav-tabs pull-right in">
+                    <li class="active">
+                        <a data-toggle="tab" href="#hb1">
+                            <i class="fa fa-lg fa-bug"></i> <span class="hidden-mobile hidden-tablet"> Errors <span class="label bg-color-red txt-color-white" data-bind="text:Log.ErrorCount">  <i class="fa fa-exclamation"></i> </span></span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#hb2">
+                            <i class="fa fa-lg fa-cog"></i> <span class="hidden-mobile hidden-tablet"> Settings </span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <div>
+                <div class="jarviswidget-editbox">
+                </div>
+                <div class="widget-body">
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="hb1">
+
+                            <div class="tabbable tabs-below">
+                                <div class="row">
+
+                                    <div id="dt-pagination">
+
+                                    </div>
+                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="jarviswidget well" id="wid-id-0">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                                                <h2 data-bind="text:Log.Name"></h2>
+                                            </header>
+
+                                            <div>
+                                                <div class="jarviswidget-editbox">
+                                                    <!-- This area used as dropdown edit box -->
+                                                    <input class="form-control" type="text">
+                                                </div>
+                                                <!-- end widget edit box -->
+                                                <!-- widget content -->
+                                                <div class="widget-body no-padding">
+
+                                                    <table id="dt_logErrors" class="display projects-table table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Logged Date</th>
+                                                                <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Type</th>
+                                                                <th>Source</th>
+                                                                <th>Host</th>
+                                                                <th><i class="fa fa-circle txt-color-darken font-xs"></i> Host/ <i class="fa fa-circle text-danger font-xs"></i> IP</th>
+                                                                <th><i class="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"></i> User</th>
+                                                                <th><i class="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"></i> IP</th>
+                                                                <th>Application Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+
+                                                </div>
+                                                <!-- end widget content -->
+
+                                            </div>
+                                            <!-- end widget div -->
+                                        </div>
+                                        <!-- end widget -->
+                                    </article>
+                                    <!-- WIDGET END -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="hb2">
+
+                            <ul id="internal-tab-1" class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tb-install" data-toggle="tab">Install</a>
+                                </li>
+                                <li>
+                                    <a href="#tb-actions" data-toggle="tab">Actions</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content padding-10">
+                                <div class="tab-pane active" id="tb-install">
+                                    <p>
+                                        To start tracking errors for <label data-bind="text:Log.Name"></label> you need to install @ConfigurationManager.AppSettings["ApplicationName"] logger in you project using NuGet:
+                                    </p>
+                                    <p>
+                                        PM> Install-Package ElmahBucket.io
+                                    </p>
+                                    <p>
+                                        Once the Nuget Package is isntalled, add the LogId below in the Web.config
+                                    </p>
+                                    <p>
+                                        <div class="form-group">
+                                            <div class="col-12-10">
+                                                <input type="text" data-bind="value:Log.LogId" readonly="readonly" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="tb-actions">
+                                    <!-- widget content -->
+@*                                    <div class="widget-body">*@
+@*                                        <fieldset>*@
+@*                                            <legend>*@
+@*                                                Doing some maintanance?*@
+@*                                            </legend>*@
+@*                                            <div class="row">*@
+@*                                                <div class="col-md-12">*@
+@*                                                    <button class="btn btn-primary" type="submit">*@
+@*                                                        Delete All Log Errors*@
+@*                                                    </button>*@
+@*                                                </div>*@
+@*                                            </div>*@
+@**@
+@*                                        </fieldset>*@
+@*                                    </div>*@
+                                    <!-- widget content -->
+                                    <div class="widget-body">
+                                        <fieldset>
+                                            <legend>
+                                                Delete the Log if no longer needed.
+                                            </legend>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary" type="button" data-bind="click: VM.deleteLog">
+                                                        Delete Log
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end widget content -->
+            </div>
+            <!-- end widget div -->
+        </div>
+    </section>
+</div>
+<script src="~/src/js/app/component/log/LogVM.js"></script>
+@section pagespecific {
+
+}

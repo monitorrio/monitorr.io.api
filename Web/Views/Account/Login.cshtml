@@ -1,0 +1,30 @@
+﻿@using System.Configuration
+@using Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "Login";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<div id='loginVM' class="container login">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default panel-auth">
+                <div class="panel-heading">
+                    <img src="~/src/images/core/logo50.png" alt="@ConfigurationManager.AppSettings["ApplicationName"]">
+                    <h3>ElmahBucket Api</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-8 col-md-offset-2">
+                            <hr class="clean">
+                            <h2>Documentation Coming Soon</h2>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

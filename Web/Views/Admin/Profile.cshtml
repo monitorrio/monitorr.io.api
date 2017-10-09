@@ -1,0 +1,470 @@
+﻿@using System.Configuration
+@using Web.Infrastructure.Static
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "User Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid user-profile">
+    <input type="hidden" value="@ViewContext.Controller.ValueProvider.GetValue("id").RawValue" name="userid" />
+    <div class="page-header">
+        <h1>
+            @ViewBag.Title <small>
+                <i class="fa fa-question-circle"></i>
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#overview" role="tab" data-toggle="tab">Overview</a>
+                </li>
+                <li>
+                    <a href="#password" role="tab" data-toggle="tab">Password</a>
+                </li>
+                @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                {
+                    <li>
+                        <a href="#notifications" role="tab" data-toggle="tab">Notifications</a>
+                    </li>
+                    <li>
+                        <a href="#advanced" role="tab" data-toggle="tab">Advanced</a>
+                    </li>
+                }
+          
+            </ul>
+            <div class="tab-content">
+                <!-- Companies Tab -->
+                <div class="panel panel-default tab-pane tabs-up active" id="overview">
+                    <div class="panel-body">
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-bind="text:UserModel.Username"></div>
+                                <div class="panel-body">
+                                    <form class="validator-form">
+                                        <div class="form-group">
+                                            <label for="FirstName">First Name</label>
+                                            <input tabindex="1" type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Enter First Name" data-bind="value:UserModel.FirstName" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="LastName">Last Name</label>
+                                            <input tabindex="2" type="text" class="form-control" id="LastName" name="LastName" placeholder="Enter Last Name" data-bind="value:UserModel.LastName" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CompanyName">Company Name</label>
+                                            <input type="text" class="form-control" id="CompanyName" name="CompanyName" placeholder="Enter Company Name" data-bind="value:UserModel.CompanyName" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="City">City</label>
+                                            <input tabindex="3" type="text" class="form-control" id="City" name="City" placeholder="Enter City Name" data-bind="value:UserModel.City" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <label for="Country">Country</label>
+                                                    <select id="Country" class="form-control" name="Country" tabindex="4" data-bind="options: VM.Countries,
+                                                                                optionsText: 'CountryName',
+                                                                                optionsValue: 'id',
+                                                                                value:UserModel.Countryid,
+                                                                                optionsCaption: '--Choose a Country--'"></select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="Region">Region</label>
+                                                    <input type="text" id="Region" name="Region" tabindex="5" class="form-control" data-bind="value:UserModel.Region" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="State">State</label>
+                                            <select id="State" class="form-control" tabindex="6" name="State" data-bind="options: VM.States,
+                                                                                optionsText: 'LongName',
+                                                                                optionsValue: 'id',
+                                                                                value:UserModel.Stateid,
+                                                                                optionsCaption: '--Select State/Region--'"></select>
+                                            <small class="custom-validator" data-bind="text:VM.ValidationMessage"></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="TimeZone">TimeZone</label>
+                                            <select id="TimeZone" class="form-control" name="TimeZone" tabindex="7" data-bind="options: VM.TimeZones,
+                                                                                optionsText: 'Description',
+                                                                                optionsValue: 'id',
+                                                                                value:UserModel.TimeZoneid,
+                                                                                optionsCaption: '--Select Time Zone--'"></select>
+                                        </div>
+                                        <button type="button" tabindex="8" class="btn btn-primary pull-right" data-bind="click: VM.update">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                <!-- Users Tab -->
+                <div class="panel panel-default padd-t-sm tab-pane tabs-up" id="password">
+                    <div class="panel-body">
+                        <div class="page-header">
+                            <div class="panel-heading" data-bind="text:UserModel.Username"></div>
+                        </div>
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            Reset Secret Question
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-8">
+                                            <form class="validator-form-secret-question">
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <label for="password">Enter Password</label>
+                                                            <input type="password" class="form-control" id="CurrentPassword" name="CurrentPassword" data-bind="value:UserModel.CurrentPassword" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <section data-bind="if: UserModel.SecretQuestionid() > 0">
+                                                    <div class="form-group secret-question">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+
+                                                                <label class="control-label">Secret Question</label>
+                                                                <select class="form-control"
+                                                                        name="SecretQuestion"
+                                                                        id="SecretQuestion"
+                                                                        data-bind="options: VM.SecretQuestions,
+                                                                                optionsText: 'SecretQuestionText',
+                                                                                optionsValue: 'id',
+                                                                                value:UserModel.SecretQuestionid"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="SecretQuestionAnswer" class="control-label">Answer</label>
+                                                                <input type="text" class="form-control" id="SecretQuestionAnswer" name="SecretQuestionAnswer" data-bind="value: UserModel.SecretQuestionAnswer">
+                                                                <small class="custom-validator" data-bind="text:VM.ValidationMessage"></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary pull-right" value="Reset Secret Question" data-bind="click: VM.resetSecretQuestion">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            Change Password
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <form class="validator-form-change-password">
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="OldPassword">Enter Old or Temporary Password</label>
+
+                                                        <input type="password" class="form-control" id="OldPassword" name="OldPassword" data-bind="value:UserModel.OldPassword" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="UpdatedPassword">Enter New Password</label>
+
+                                                        <input type="password" class="form-control" id="UpdatedPassword" name="UpdatedPassword" data-bind="value:UserModel.UpdatedPassword" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="VerifyPassword">Verify New Password</label>
+                                                        <input type="password" class="form-control" id="VerifyPassword" name="VerifyPassword" data-bind="value:UserModel.VerifyPassword" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary pull-right" value="Change Password" data-bind="click: VM.changePassword">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                <!-- Users Tab -->
+                <div class="panel panel-default padd-t-sm tab-pane tabs-up" id="notifications">
+                    <div class="panel-body">
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-bind="text:UserModel.Username"></div>
+                                <div class="panel-body">
+                                    <form class="validator-form">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading clean">Activate Out of Office Message</div>
+                                            <div class="panel-body">
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.OutOfOffice" /> Activate Out of Office Message
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <label class="control-label">Out Of Office Message</label>
+                                                            <textarea id="OutOfOfficeMessage" name="OutOfOfficeMessage" class="form-control" data-bind="value:UserModel.OutOfOfficeMessage"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading clean">Select Email Notifications</div>
+                                            <div class="panel-body">
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.NotifyReceiveFile" /> Receive a file
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.NotifySendFile" /> Send a file
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.NotifyFileToExpire" /> File about to expire
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.NotifyFileAutoDeleted" /> File automatically deleted
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="checkbox">
+                                                                <input type="checkbox" name="added" data-bind="checked: UserModel.NotifyRecipientDownloaded" /> Recipient has downloaded your file
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary pull-right" value="Validate" data-bind="click: VM.update">Save</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                <!-- Users Tab -->
+                <div class="panel panel-default padd-t-sm tab-pane tabs-up" id="advanced">
+                    <div class="panel-body">
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-bind="text:UserModel.Username"></div>
+                                <div class="panel-body">
+                                    <form class="validator-form">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label class="control-label">Corporate identifier</label>
+                                                    <input type="text" class="form-control" id="CorporateIdentifier" name="Corporateidentifier" data-bind="value:UserModel.Corporateidentifier" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label for="NewPassword">Password</label>
+                                                    <input type="password" class="form-control" id="NewPassword" name="NewPassword" data-bind="value:UserModel.NewPassword" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label class="control-label">Password Expiration Date</label>
+                                                    <div class='input-group date'>
+                                                        <input id="datetimepicker" type='text' class="form-control" name="monthDayYear" data-date-format="MM/DD/YYYY" data-bind="value:UserModel.PasswordExpirationDate" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="InvalidLoginCount">Invalid Login Count</label>
+                                                    <input type="text" id="InvalidLoginCount" name="InvalidLoginCount" class="form-control" data-bind="value:UserModel.InvalidLoginCount" disabled="disabled" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="SecurityLevel">Security Level</label>
+                                                    <input type="text" class="form-control" id="SecurityLevel" name="SecurityLevel" data-bind="value:UserModel.SecurityLevel" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label class="control-label">User Expiration Date</label>
+                                                    <div class='input-group date'>
+                                                        <input type='text' class="form-control" name="monthDayYear" data-date-format="MM/DD/YYYY" data-bind="value:UserModel.UserExpirationDate" />
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="SecurityLevel">Date User Added</label>
+                                                    <input type="text" class="form-control" id="DateUserAdded" name="DateUserAdded" data-bind="value:UserModel.DateCreated" disabled="disabled" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="added" data-bind="checked: UserModel.IsActive" /> Active
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="added" data-bind="checked: UserModel.IsLocked" /> User Locked
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="added" data-bind="checked: UserModel.ReviewRequired" /> Profile Review Required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="added" data-bind="checked: UserModel.PasswordChangeRequired" /> Password Change Required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="added" data-bind="checked: UserModel.TenDaysPasswordNoticeSent" /> Ten Day Password Notice Sent
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary pull-right" value="Validate" data-bind="click: VM.update">Save</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/src/js/app/component/admin/UserProfileVM.js"></script>

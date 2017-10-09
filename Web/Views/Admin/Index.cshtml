@@ -1,0 +1,122 @@
+﻿@using System.Configuration
+@using Web.Infrastructure.Static
+@model int
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid">
+    <div class="page-header">
+        <h1>
+            @ViewBag.Title <small>
+                <i class="fa fa-question-circle"></i>
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default ng-scope">
+                <div class="panel-heading un-bold">
+                    <h4>Profile</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group no-margn nicescroll todo-list">
+                        <li class="list-group-item">
+                            @Html.ActionLink("Overview", "Profile", "Admin", new {id = @Model, tab = "overview", area = ""}, new {@class = "text-primary"})
+                        </li>
+                        <li class="list-group-item">
+                            @Html.ActionLink("Password", "Profile", "Admin", new {id = @Model, tab = "password", area = ""}, new {@class = "text-primary"})
+                        </li>
+                        @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                        {
+                            <li class="list-group-item">
+                                @Html.ActionLink("Notifications", "Profile", "Admin", new {id = @Model, tab = "notifications", area = ""}, new {@class = "text-primary"})
+                            </li>
+                        }
+
+                        @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                        {
+                            <li class="list-group-item">
+                                @Html.ActionLink("Advanced", "Profile", "Admin", new {id = @Model, tab = "advanced", area = ""}, new {@class = "text-primary"})
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+       
+            <div class="col-lg-6">
+                <div class="panel panel-default ng-scope">
+                    <div class="panel-heading un-bold">
+                        <h4>User Management</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group no-margn">
+                            @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+                            {
+                                <li class="list-group-item ng-scope">
+                                    @Html.ActionLink("Manage Companies", "UserManagement", "Admin", new {tab = "companies", area = ""}, new {@class = "text-primary"})
+                                </li>
+                            }
+                            <li class="list-group-item ng-scope">
+                                @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin) ||
+                                     SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Pro) ||
+                                     SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Enterprise))
+                                {
+                                    @Html.ActionLink("Manage Users", "UserManagement", "Admin", new {tab = "users", area = ""}, new {@class = "text-primary"})
+                                    <ul class="no-margn">
+                                        <li class="list-group-item ng-scope">
+                                            @Html.ActionLink("Duplicate Users", "UserManagement", "Admin", new {tab = "companies", area = ""}, new {@class = "text-primary"})
+                                        </li>
+                                        <li class="list-group-item ng-scope">
+                                            @Html.ActionLink("Users Added/Deleted", "UserManagement", "Admin", new {tab = "users", area = ""}, new {@class = "text-primary"})
+
+                                        </li>
+                                    </ul>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+
+    </div>
+    @if (SecurityLevel.ValidateSecurityLevel(eSecurityLevel.Admin))
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default ng-scope">
+                    <div class="panel-heading un-bold">
+                        <h4>Reports</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group no-margn nicescroll todo-list">
+                            <li class="list-group-item ng-scope">
+                                <a class="text-primary" href="#">Reports</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default ng-scope">
+                    <div class="panel-heading un-bold">
+                        <h4>Tools</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group no-margn nicescroll todo-list">
+                            <li class="list-group-item ng-scope">
+                                <a class="text-primary" href="#">View / Edit Global System Parameters & Options</a>
+                            </li>
+                            <li class="list-group-item ng-scope">
+                                <a class="text-primary" href="#">Mailbox File Expiration</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

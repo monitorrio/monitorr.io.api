@@ -1,0 +1,64 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Core.Domain
+{
+    public class User:MongoEntity
+    {
+        public string Auth0Id { get; set; }
+        [BsonRequired]
+        public string FirstName { get; set; }
+        [BsonRequired]
+        public string LastName { get; set; }
+        public string MiddleName { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool RegistrationComplete { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateModified { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
+        public int ModifiedByUserId { get; set; }
+
+<<<<<<< HEAD
+        #region unmapped
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+        #endregion
+=======
+        [Required]
+        public string RoleId { get; set; }
+
+        public string UserIP { get; set; }
+        public string RegistrationIPAddress { get; set; }
+        public DateTime? DateReleased { get; set; }
+        public DateTime? PasswordExpirationDate { get; set; }
+        public DateTime? DateTimeActivated { get; set; }
+        public DateTime? UserExpirationDate { get; set; }
+        public DateTime?  LastProfileCheckDate { get; set; }
+        public DateTime?  DateTimeSetInactive { get; set; }
+        public DateTime? DateTimeUserPurged { get; set; }
+        public bool? TenDayPasswordExpirationNoticeSent { get; set; }
+        public bool? ToRemove { get; set; }
+        public bool? TwentyOneDayPwExpirationNoticeSent { get; set; }
+        public bool?  ThreeDayPwExpirationNoticeSent { get; set; }
+
+        [BsonIgnore]
+        public string FullName => FirstName + " " + LastName;
+
+        [BsonIgnore]
+        public string PhoneNumber { get; set; }
+
+        [BsonIgnore]
+        public string PhoneType { get; set; }
+       
+>>>>>>> 6b0bf17df57a5b4574530420c1b751a3259bbbb3
+    }
+}

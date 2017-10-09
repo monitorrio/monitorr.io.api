@@ -1,0 +1,10 @@
+"SecurityLevel","SecurityTitle","Description"
+1,"Supplier User",
+2,"Supplier Admin",
+3,"For User","Basic access and ability to just see logs and history"
+4,"Ford Admin Level 1","Basic user rights + ability to approve users, share grops, suspend users, restart users, view logs and history"
+5,"Ford Amin Level 2","All level 1 + reports"
+10,"Ford JV User",
+20,"Toyota JV User",
+80,"Capitol Support Admin",
+100,"Capitol All Access Amin",

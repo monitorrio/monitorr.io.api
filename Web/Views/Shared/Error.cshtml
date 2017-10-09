@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model string
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <h1 class="text-center" style="font-size:150px; font-weight:800;">404</h1>
+            <p class="text-center lead">The Page you requested does not exist</p>
+            <hr class="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 text-center ">
+            <hr class="">
+            <p class="text-gray">@Model</p>
+            <button type="submit" class="btn btn-default">Go Home</button>
+        </div>
+    </div>
+
+</div>

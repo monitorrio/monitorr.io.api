@@ -1,0 +1,281 @@
+﻿@using System.Configuration
+@model Web.Models.CompanyModel
+@{
+    ViewBag.Title = @ConfigurationManager.AppSettings["ApplicationTitleName"] + " " + "Company Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" name="companyid" value="@Model.Id" />
+<div class="warper container-fluid company-profile">
+    <div class="page-header">
+        <h3>Companies / @Model.Name</h3>
+    </div>
+    <div class="row edit-panel">
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+
+                    <label data-bind="text:CompanyModel.Name"></label> - <span data-bind="text:CompanyModel.id"></span>
+                    <button type="button" class="btn btn-purple btn-group" data-bind="click: VM.updateSupplier">Update</button>
+                </div>
+                <div class="panel-body">
+                    <form class="validator-form">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label for="CompanyName">Company Name</label>
+                                <input type="text" class="form-control" id="CompanyName" name="CompanyName" data-bind="value:CompanyModel.Name" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="City">City</label>
+                                <input type="text" class="form-control" id="City" name="City" data-bind="value:CompanyModel.City" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="Country">Country</label>
+                                <select id="Country" class="form-control" name="Country" data-bind="options: VM.Countries,
+                                                                                optionsText: 'CountryName',
+                                                                                optionsValue: 'id',
+                                                                                value:CompanyModel.Countryid,
+                                                                                optionsCaption: '--Choose a Country--'"></select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group spaced">
+                            <div class="col-sm-4">
+                                <label for="State">State</label>
+                                <select id="State" class="form-control" name="State" data-bind="options: VM.States,
+                                                                                optionsText: 'LongName',
+                                                                                optionsValue: 'id',
+                                                                                value:CompanyModel.Stateid,
+                                                                                optionsCaption: '--Select State/Region--'"></select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="TimeZone">Time Zone</label>
+                                <select id="TimeZone" class="form-control" name="TimeZone" data-bind="options: VM.TimeZones,
+                                                                                optionsText: 'Description',
+                                                                                optionsValue: 'id',
+                                                                                value:CompanyModel.TimeZoneid,
+                                                                                optionsCaption: '--Select Time Zone--'"></select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="InternalAccountNumber">Internal Account Number</label>
+                                <input type="text" class="form-control" id="InternalAccountNumber" name="InternalAccountNumbe" data-bind="value:CompanyModel.InternalAccountNumber" />
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row snapshot-panel">
+        <div class="col-sm-12">
+            <div class="col-sm-8">
+                <div class="col-sm-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            Company
+                        </div>
+                        <div class="panel-body">
+                            <span data-bind="text:CompanyModel.Name"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            Company ID
+                        </div>
+                        <div class="panel-body">
+                            <span data-bind="text:CompanyModel.id"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            Total User Licenses
+                        </div>
+                        <div class="panel-body">
+                            <span data-bind="text:CompanyModel.TotalUserLicenses"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            Active Users
+                        </div>
+                        <div class="panel-body">
+                            <span data-bind="text:CompanyModel.ActiveUsersCount"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row licenses-panel">
+        <div class="col-sm-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Add Additional Licenses
+                </div>
+                <div class="panel-body">
+                    <table id="licenses-datatable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Date/Time Added</th>
+                                <th>Status</th>
+                                <th>Date Deleted User Released</th>
+                                <th>Delete License</th>
+                            </tr>
+                        </thead>
+                        <tbody colspan="7" class="dataTables_empty">
+                            <img class="loader" src="http://preloaders.s3.amazonaws.com/294.gif" alt="loading data" />
+                        </tbody>
+                    </table>
+                    <div class="col-sm-9 add-user">
+                        <div class="panel-group" id="accordion1">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                                            Add New User
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <form class="validator-form-add-user">
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-2">
+                                                            <label for="FirstName">First Name</label>
+                                                            <input type="text" class="form-control" id="FirstName" name="FirstName" data-bind="value:UserModel.FirstName"/>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label for="LastName">Last Name</label>
+                                                            <input type="text" class="form-control" id="LastName" name="LastName" data-bind="value:UserModel.LastName"/>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="LastName">Email</label>
+                                                            <input type="text" class="form-control inputmask" data-inputmask="'alias': 'Email'" name="Email" data-bind="value: UserModel.Email">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="LastName">Verify Email</label>
+                                                            <input type="text" class="form-control" name="VerificationEmail" data-bind="value: VM.VerificationEmail">
+                                                        </div>
+                                                        <div class="col-sm-2">
+
+                                                            <button type="button" class="btn btn-purple btn-group" data-bind="click: VM.addUser">Add User</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 add-license">
+                        <div class="panel-group" id="accordion2">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                            Supplier Licenses
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <select id="license-count" name="license-count" class="form-control input-sm" data-bind="options: VM.LicenseFilters, optionsText: 'Count', optionsValue: 'Count', value: UserModel.RequestedLicenseCount"></select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <button type="button" class="btn btn-purple request-additional-licenses" data-bind="click: VM.updateLicenses">Save Chages</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* if supplier admin
+                        <div class="col-sm-3 add-license">
+                        <div class="panel-group" id="accordion2">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                            Request Additional Licenses
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <select id="license-count" name="license-count"  class="form-control input-sm" data-bind="options: VM.LicenseFilters, optionsText: 'Count', optionsValue: 'Count', value: UserModel.RequestedLicenseCount"></select>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <button type="button" class="btn btn-purple request-additional-licenses" data-bind="click: VM.requestLicenses">Request</button>
+                                                        </div>
+                                                   
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row users-panel">
+        <div class="col-sm-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    View All Users for this Supplier
+                </div>
+                <div class="panel-body">
+                    <table id="users-datatable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody colspan="5" class="dataTables_empty">
+                            <img class="loader" src="http://preloaders.s3.amazonaws.com/294.gif" alt="loading data" />
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/src/js/app/component/admin/CompanyProfileVM.js"></script>

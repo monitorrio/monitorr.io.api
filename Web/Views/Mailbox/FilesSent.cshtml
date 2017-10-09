@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="warper container-fluid outbox">
+    <div class="page-header">
+        <h1>Files Sent</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="panel panel-default clearfix dashboard-stats rounded">
+                        <i class="fa fa-file bg-info stats-icon"></i>
+                        <h3 class="transit" data-bind="text:VM.SentFilesCount"></h3>
+                        <!-- ko if: VM.SentFilesCount() > 1 -->
+                        <p class="text-muted transit">Sent Files</p>
+                        <!-- /ko -->
+                        <!-- ko if:  VM.SentFilesCount() < 2 -->
+                        <p class="text-muted transit">Sent File</p>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <button title="Expport CSV" class="btn btn-purple pull-right margin-left-x10" type="button"><i class="fa fa-file-excel-o"></i> Export CSV</button>
+                </div>
+            </div>
+            <hr class="clean">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="sent-files-datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-ban"></i> Access Cancelled</th>
+                                    <th>Log Date/Time</th>
+                                    <th>File Name</th>
+                                    <th>File ID</th>
+                                    <th>Size</th>
+                                    <th>Uploaded to</th>
+                                    <th>Company</th>
+                                    <th>Comments</th>
+                                    <th>Expire Date</th>
+                                    <th>Status</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody colspan="1" class="dataTables_empty"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe style="display: none;" id="fileDelegate">
+    <form method="post" action="/api/files">
+        <input type="hidden" name="criteria" />
+    </form>
+</iframe>
+
+<script src="~/src/js/app/component/mailbox/OutboxVM.js"></script>

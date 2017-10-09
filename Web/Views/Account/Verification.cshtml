@@ -1,0 +1,74 @@
+﻿@using System.Configuration
+@using Web.Infrastructure.Extensions
+@model Web.Models.ResetPasswordViewModel
+@{
+    ViewBag.Title = "User ID / Password Recovery";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="container supplier-registration">
+    @{ Html.RenderModule(ModuleExtensions.ModuleType.AlertPlaceholder); }
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default panel-auth">
+                <div class="panel-heading">
+                    <img src="~/src/images/core/logo50.png" alt="@ConfigurationManager.AppSettings["ApplicationName"]">
+                    <h3>@ViewBag.Title</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        @using (Html.BeginForm("VerifyChallengeQuestion", "Account", FormMethod.Post, new {}))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <hr class="clean">
+
+                                <form role="form">
+                                    <div class="form-group text-center">
+                                        To Reset / Unlock Password
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Enter User ID</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
+                                        </div>
+                                    </div>
+                           
+                                    <hr class="separator">
+
+                                    @if (string.IsNullOrEmpty(Model.VerificationMessage))
+                                    {
+                                        <div class="form-group text-center">
+                                            <h6>Answer the following challenge question:</h6>
+                                            <hr class="clean">
+                                            <div class="form-group">
+                                                <label>@Model.ChallengeQuestion</label>
+                                                @Html.TextBoxFor(m => m.ChallengeQuestionAnswer, new {@class = "form-control"})
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group text-center">
+                                            <label class="text-success">@Model.VerificationMessage</label>
+                                        </div>
+                                    }
+                                    <button type="submit" class="btn btn-info btn-block">Set User ID</button>
+                                </form>
+                                <hr>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                @Html.ActionLink("Login to your account", "Login", "Account", null, new { @class = "pull-right", area = "" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
