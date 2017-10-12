@@ -1,6 +1,6 @@
 # INTRODUCTION #
 
-ElmahBucket is a web service/admin that allow for storing elmah errors in the cloud.
+Monitorr is a web service/admin that allow for storing elmah errors in the cloud.
 
 It provides an easy to use admin for manageing your application generated errors.
 

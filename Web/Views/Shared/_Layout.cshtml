@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>@ViewBag.Title</title>
     <meta name="description" content="Elmah Logging Admin">
-    <meta name="author" content="@AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket")">
+    <meta name="author" content="@AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr")">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Basic Styles -->
@@ -82,6 +82,6 @@
         Html.RenderPartialIf("_Tiles", Settings.EnableTiles);
     }
     @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false)); }
-    <input type="hidden" value="@AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket")" name="api"/>
+    <input type="hidden" value="@AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr")" name="api"/>
 </body>
 </html>
