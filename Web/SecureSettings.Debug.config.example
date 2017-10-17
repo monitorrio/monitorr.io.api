@@ -1,0 +1,18 @@
+
+<!--
+You can use this file as an example for each configuration type like SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, etc. 
+Files SecureSettings.*.config attached as linked files by security reasons
+-->
+
+<appSettings>
+  <add key="auth0:ClientId" value="YOUR_AUTH0_CLIENT_ID" />
+  <add key="auth0:ClientSecret" value="YOUR_AUTH0_CLIENT_SECRET" />
+  <add key="auth0:Domain" value="YOUR_AUTH0_CLIENT_DOMAIN.auth0.com" />
+  <add key="MongoUri" value="mongodb://localhost:27017/Monitorr" />
+  <add key="hangfire:ConnectionString" value="mongodb://localhost" />
+  <add key="hangfire:DatabaseName" value="EbHangfire" />
+  <add key="aws:ClientId" value="YOUR_AWS_CLIENT_ID" />
+  <add key="aws:SecretKey" value="YOUR_AWS_SECRETKEY" />
+  <add key="aws:SesRegion" value="YOUR_AWS_SESREGION" />
+  <add key="aws:fromEmail" value="YOUR_EMAIL_ADDRESS" />
+</appSettings>
