@@ -1,7 +1,13 @@
 
 <!--
 You can use this file as an example for each configuration type like SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, etc. 
-Files SecureSettings.*.config attached as linked files by security reasons
+
+Due to security reasons all sensitive information ("auth ClientId", "auth ClientSecret", MongoUri, AWS credentials, etc.) is moved to separated configuration files
+(SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, SecureSettings.Testing.config etc.) 
+which are attached to the project as linked files and stored out of project folder by path "C:\Projects\Monitorr.io\". 
+So you need to create appropriated security settings files by that path using 'SecureSettings.Debug.config.example' as a template or just 
+include them directly to your project if you don't plan to share them.
+
 -->
 
 <appSettings>
