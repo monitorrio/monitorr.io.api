@@ -26,6 +26,7 @@
     <TargetFrameworkProfile />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <ApplicationInsightsResourceId>/subscriptions/ddf16835-b932-4528-8257-1fd9678a48b4/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Web</ApplicationInsightsResourceId>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -855,6 +856,22 @@
     <Content Include="Infrastructure\Migrations\Data\dbo_Roles.csv" />
     <Content Include="Infrastructure\Migrations\Data\legacy_logs.csv" />
     <Compile Include="App_Start\Startup.Hangfire.cs" />
+    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Debug.config">
+      <Link>SecureSettings.Debug.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Release.config">
+      <Link>SecureSettings.Release.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Staging.config">
+      <Link>SecureSettings.Staging.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Testing.config">
+      <Link>SecureSettings.Testing.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -932,6 +949,7 @@
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Views\Confirmation\Index.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="SecureSettings.Debug.config.example" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1017,6 +1035,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+  </Target>
+  <Target Name="CopyLinkedContentFiles" BeforeTargets="Build">
+    <Copy SourceFiles="%(Content.Identity)" DestinationFiles="%(Content.Link)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Condition="'%(Content.Link)' != ''" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

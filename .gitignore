@@ -92,3 +92,4 @@ packages
 
 *.sdf
 /oem-advantage/Web/App_Data/filedirectory
+Web/SecureSettings.*.config

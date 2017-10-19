@@ -1,0 +1,24 @@
+
+<!--
+You can use this file as an example for each configuration type like SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, etc. 
+
+Due to security reasons all sensitive information ("auth ClientId", "auth ClientSecret", MongoUri, AWS credentials, etc.) is moved to separated configuration files
+(SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, SecureSettings.Testing.config etc.) 
+which are attached to the project as linked files and stored out of project folder by path "C:\Projects\Monitorr.io\". 
+So you need to create appropriated security settings files by that path using 'SecureSettings.Debug.config.example' as a template or just 
+include them directly to your project if you don't plan to share them.
+
+-->
+
+<appSettings>
+  <add key="auth0:ClientId" value="YOUR_AUTH0_CLIENT_ID" />
+  <add key="auth0:ClientSecret" value="YOUR_AUTH0_CLIENT_SECRET" />
+  <add key="auth0:Domain" value="YOUR_AUTH0_CLIENT_DOMAIN.auth0.com" />
+  <add key="MongoUri" value="mongodb://localhost:27017/Monitorr" />
+  <add key="hangfire:ConnectionString" value="mongodb://localhost" />
+  <add key="hangfire:DatabaseName" value="EbHangfire" />
+  <add key="aws:ClientId" value="YOUR_AWS_CLIENT_ID" />
+  <add key="aws:SecretKey" value="YOUR_AWS_SECRETKEY" />
+  <add key="aws:SesRegion" value="YOUR_AWS_SESREGION" />
+  <add key="aws:fromEmail" value="YOUR_EMAIL_ADDRESS" />
+</appSettings>
