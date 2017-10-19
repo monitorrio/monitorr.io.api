@@ -12,6 +12,8 @@ namespace Web.Infrastructure.Extensions
 {
     public static class ModelExtensions
     {
+        private const int DefaultQueryLimitSize = 100;
+
         public static EmailModel ThenModel(this EmailModel model)
         {
             model.ToEmail = model.User.Email;
@@ -74,18 +76,20 @@ namespace Web.Infrastructure.Extensions
             throw new Exception("Cannot get licence for user");
         }
 
-
         public static List<LogModel> ToToday(this List<LogModel> items, IErrorRepository errorRepository)
         {
+            var startDate = AppTime.Now().StartOfDay().AddDays(-1);
+            var endDate = AppTime.Now().EndOfDay();
+
             foreach (var m in items)
             {
                 m.Errors = new List<ErrorModel>();
                 m.Errors =
-                    errorRepository.FindByLogId(m.LogId, AppTime.Now().StartOfDay().AddDays(-1), AppTime.Now().EndOfDay(), null)
+                    errorRepository.FindByLogId(m.LogId, startDate, endDate, DefaultQueryLimitSize)
                         .Select(x => new ErrorModel().MapEntity(x))
                         .ToList();
 
-                m.LatestErrorCount = m.Errors.Count;
+                m.LatestErrorCount = errorRepository.CountForPeriodAsync(m.LogId, startDate, endDate).Result; 
             }
 
             return items;
