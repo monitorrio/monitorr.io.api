@@ -1,6 +1,6 @@
 # INTRODUCTION #
 
-ElmahBucket is a web service/admin that allow for storing elmah errors in the cloud.
+Monitorr is a web service/admin that allow for storing elmah errors in the cloud.
 
 It provides an easy to use admin for manageing your application generated errors.
 
@@ -10,11 +10,11 @@ It provides an easy to use admin for manageing your application generated errors
 
 ### How do I get set up? ###
 
-* Dowload this source code via git.
-* Open in Visual Studio 2015 and hit run.
+Due to security reasons all sensitive information ("auth ClientId", "auth ClientSecret", MongoUri, AWS credentials, etc.) is moved to separated configuration files
+(SecureSettings.Debug.config, SecureSettings.Release.config, SecureSettings.Staging.config, SecureSettings.Testing.config) which are attached to the project as 
+linked files and stored out of project folder by path "C:\Projects\Monitorr.io\". 
+So you need to create appropriated security settings files by that path using 'SecureSettings.Debug.config.example' as a template or just include them directly to your project if you don't plan to share them.
 
-### Test Accounts ###
-| Role |  Username | Password  | Company
-| :----:| :-----:| :-----:|
-| Admin | vlaur@greystats.com | Just4now2016! | 201 Apps Inc
-| Free | vasile.laur@gmail.com | Just4now2016! | 201 Apps Inc
+* Dowload this source code via git.
+* Open in Visual Studio 2017, setup security configuration and hit run.
+

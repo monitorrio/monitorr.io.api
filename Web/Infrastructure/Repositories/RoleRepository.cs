@@ -28,31 +28,31 @@ namespace Web.Infrastructure.Repositories
         {
             await _collection.InsertOneAsync(new Role
             {
-                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket"),
+                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr"),
                 RoleName = RoleName.Admin
             });
 
             await _collection.InsertOneAsync(new Role
             {
-                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket"),
+                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr"),
                 RoleName = RoleName.Enterprise
             });
 
             await _collection.InsertOneAsync(new Role
             {
-                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket"),
+                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr"),
                 RoleName = RoleName.Pro
             });
 
             await _collection.InsertOneAsync(new Role
             {
-                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket"),
+                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr"),
                 RoleName = RoleName.Free
             });
 
             await _collection.InsertOneAsync(new Role
             {
-                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "ElmahBucket"),
+                ApplicationName = AppDeployment.Instance.AppSetting("ApplicationName", "Monitorr"),
                 RoleName = RoleName.LogAccess
             });
         }
