@@ -30,6 +30,11 @@ namespace Web.Infrastructure.Repositories
             return _collection.Find(x => x.Guid == guid).First();
         }
 
+        public async Task<Error> GetByGuidAsync(string guid)
+        {
+            return await _collection.Find(x => x.Guid == guid).FirstAsync();
+        }
+
         public List<Error> FindLatestByUserId(string userId)
         {
             var ownerLogs = _logCollection.Find(x => x.UserId == userId).ToList().Select(x => x.LogId).ToList();
@@ -256,6 +261,7 @@ namespace Web.Infrastructure.Repositories
     public interface IErrorRepository
     {
         Error GetByGuid(string guid);
+        Task<Error> GetByGuidAsync(string guid);
         List<Error> FindLatestByUserId(string userId);
         Task<List<Error>> FindLatestByUserIdAsync(string userId);
         Task<List<Error>> FindByLogId(string logId);
