@@ -6,7 +6,8 @@ using Web.Models;
 using System.Web.Http;
 using System.Threading.Tasks;
 using System.Web.Http.Cors;
-using System.Web.Http.Results;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using SharpAuth0;
 using Web.Infrastructure.Extensions;
 using Web.Infrastructure.Repositories;
@@ -48,6 +49,25 @@ namespace Web.Controllers.Api
 
             var model = new LogModel().MapEntity(x).ResolveErrorCount(_errorRepository);
             return Ok(model);
+        }
+
+        [HttpGet, Route("{id}/info")]
+        public async Task<IHttpActionResult> GetErrorInfo(string id)
+        {
+            var x = await _errorRepository.GetByGuidAsync(id);
+
+            if (x == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ErrorModel().MapEntity(x);
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            return Json(model, serializerSettings);
         }
 
         [HttpGet, Route("new")]
