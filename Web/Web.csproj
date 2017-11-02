@@ -415,6 +415,7 @@
     <Compile Include="Infrastructure\Services\Email\EmailTypeService.cs" />
     <Compile Include="Infrastructure\Services\JobRunner.cs" />
     <Compile Include="Models\DigestEmailModel.cs" />
+    <Compile Include="Models\ChartTimePeriod.cs" />
     <Compile Include="Models\InviteUserModel.cs" />
     <Compile Include="Controllers\Api\LogsController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
