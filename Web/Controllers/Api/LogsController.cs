@@ -208,8 +208,7 @@ namespace Web.Controllers.Api
         }
 
         [HttpGet, Route("{id}/overview/aggregate/")]
-        public async Task<HttpResponseMessage> AggregatedErrorsCount(string id, double timeZoneOffset, DateTime? from = null,
-            DateTime? to = null)
+        public async Task<HttpResponseMessage> AggregatedErrorsCount(string id, double timeZoneOffset, DateTime? from = null, DateTime? to = null)
         {
             to = to?.ToUniversalTime() ?? DateTime.UtcNow;
 
@@ -217,59 +216,50 @@ namespace Web.Controllers.Api
 
             from = from?.ToUniversalTime() ?? errors.Min(c => c.Time.ToUniversalTime());
 
-            var model = new List<ErrorCountForPeriodModel>();
+            var periods = GetTimePeriods(from.Value, to.Value, timeZoneOffset);
 
-            var diff = to - from;
-
-            var format = "";
-            var showTimeOnly = diff.Value.TotalDays < 3;
-            format = diff.Value.TotalDays > 3 
-                ? "d" 
-                : "t";
-
-            var groupedByDate = errors.GroupBy(g => g.Time.ToUniversalTime()
-            .AddHours(timeZoneOffset).ToString(format)).ToList();
-
-            var myspace = diff.Value.Ticks / 20;
-
-            for (var i = from.Value.Ticks; i < to.Value.Ticks; i = i + myspace)
+            var model = periods.Select(pr => new ErrorCountForPeriodModel
             {
-                var date = new DateTime(i);
-                var formatedDate = date.AddHours(timeZoneOffset).ToString(format);
-                if (model.Any(m => m.PeriodName == date.ToString(format)))
-                {
-                    continue;
-                }
-                var errDate = groupedByDate.SingleOrDefault(s => s.Key == formatedDate);
-
-                model.Add(new ErrorCountForPeriodModel
-                {
-                    PeriodDate = date,
-                    PeriodName = formatedDate,
-                    Count = errDate?.Count() ?? 0,
-                    ShowTimeOnly = showTimeOnly
-                });
-            }
-
-            foreach (var error in groupedByDate)
-            {
-                if (model.Any(m => m.PeriodName == error.Key))
-                {
-                    continue;
-                }
-
-                model.Add(new ErrorCountForPeriodModel
-                {
-                    PeriodDate = DateTime.Parse(error.Key),
-                    PeriodName = error.Key,
-                    Count = error.Count(),
-                    ShowTimeOnly = showTimeOnly
-                });
-            }
+                PeriodName = pr.PeriodName,
+                PeriodDate = pr.PeriodDate,
+                ShowTimeOnly = pr.ShowTimeOnly,
+                Count = errors.Count(er => er.Time >= pr.StartDate && er.Time < pr.EndDate)
+            }).ToList();
+            
 
             model = model.CustomSort(SortingDirection.Ascending, m => m.PeriodDate).ToList();
 
             return model.ToResult(HttpNotificationStatus.Success.ToString()).ToHttpResponseMessageJson();
+        }
+
+        private IList<ChartTimePeriod> GetTimePeriods(DateTime from, DateTime to, double timeZoneOffset)
+        {
+            var periods = new List<ChartTimePeriod>();
+            var daysCountForDateFormat = 3;
+            var diff = to - from;
+            var showTimeOnly = diff.TotalDays < daysCountForDateFormat;
+            var barsLimit = 20;
+
+            var intervalCount = showTimeOnly
+                ? barsLimit
+                : ((int) diff.TotalDays > barsLimit ? barsLimit : (int) diff.TotalDays);
+
+            var myspace = diff.Ticks / intervalCount + 1;
+
+            var prevDate = from;
+            for (var i = from.Ticks; i <= to.Ticks; i = i + myspace)
+            {
+                var nextDate = new DateTime(i + myspace);
+
+                periods.Add(new ChartTimePeriod(timeZoneOffset, showTimeOnly)
+                {
+                    StartDate = prevDate,
+                    EndDate = nextDate > to ? to.AddSeconds(1) : nextDate
+                });
+                prevDate = nextDate;
+            }
+
+            return periods;
         }
 
         [HttpGet, Route("users/{userId}")]
