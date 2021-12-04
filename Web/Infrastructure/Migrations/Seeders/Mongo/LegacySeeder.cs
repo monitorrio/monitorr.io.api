@@ -11,7 +11,7 @@ namespace Web.Infrastructure.Migrations.Seeders.Mongo
     {
         public static void SeedLogs()
         {
-            GrowlHelper.SimpleGrowl("Seeding Legacy Logs");
+            //GrowlHelper.SimpleGrowl("Seeding Legacy Logs");
 
             var lines = File.ReadAllLines(Path.Combine(AppPaths.Instance.GetMigrationDataFolder(), "legacy_logs.csv")).Select(a => a.Split(';'));
 

@@ -14,7 +14,7 @@ namespace Web.Infrastructure.Migrations.Seeders.Mongo
     {
         public static void Seed()
         {
-            GrowlHelper.SimpleGrowl("Seeding Roles");
+            //GrowlHelper.SimpleGrowl("Seeding Roles");
             var repo = new RoleRepository();
             string[] items = Enum.GetNames(typeof(RoleName));
 

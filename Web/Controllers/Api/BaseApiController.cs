@@ -46,7 +46,7 @@ namespace Web.Controllers.Api
             if (ex.InnerException.InnerException == null) return;
             this.LogInfo(ex.InnerException.InnerException.Message);
             this.LogDebug("----------------------END ERROR----------------------------------------");
-            GrowlHelper.SimpleGrowl(ControllerContext.Request.RequestUri.AbsoluteUri, $"with message: { ex.InnerException.Message }");
+            //GrowlHelper.SimpleGrowl(ControllerContext.Request.RequestUri.AbsoluteUri, $"with message: { ex.InnerException.Message }");
         }
 
 

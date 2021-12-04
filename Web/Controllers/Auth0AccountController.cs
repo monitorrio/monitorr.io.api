@@ -12,7 +12,13 @@ namespace Web.Controllers
 {
     public class Auth0AccountController : Controller
     {
-        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
         //
         // GET: /Auth0Account/ExternalLoginCallback
@@ -72,7 +78,10 @@ namespace Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

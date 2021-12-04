@@ -24,7 +24,7 @@ namespace Web
         protected void Application_Start()
         {
             this.LogDebug("Application Initializing");
-            GrowlHelper.SimpleGrowl("Application Initializing");
+            //GrowlHelper.SimpleGrowl("Application Initializing");
             AppPaths.SetCurrent(new AppPaths.PathsInstance(
                 new DirectoryInfo(Server.MapPath("~")),
                 new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Web"))

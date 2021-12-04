@@ -11,7 +11,7 @@ namespace Web.Infrastructure.Migrations.Seeders.Mongo
     {
         public static void Seed()
         {
-            GrowlHelper.SimpleGrowl("Seeding Colors");
+            //GrowlHelper.SimpleGrowl("Seeding Colors");
             var repo = new ColorRepository();
 
             repo.DeleteAll();

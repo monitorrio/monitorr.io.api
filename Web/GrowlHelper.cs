@@ -1,6 +1,4 @@
-using Growl.Connector;
-
-namespace Core
+namespace Web
 {
     class GrowlHelper
     {

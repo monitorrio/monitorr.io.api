@@ -27,9 +27,9 @@ namespace Core
 
         public static void LogDebug(this object loggingContext, string message, bool growl, params object[] messageParameters)
         {
-            if (growl) {
-                GrowlHelper.SimpleGrowl(message);
-            }
+            // if (growl) {
+            //     GrowlHelper.SimpleGrowl(message);
+            // }
             checkCanLogInContext(loggingContext);
             GetLoggerForContext(loggingContext).Debug(message, messageParameters);
         }
