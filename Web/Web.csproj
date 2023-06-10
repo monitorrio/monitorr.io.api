@@ -857,22 +857,6 @@
     <Content Include="Infrastructure\Migrations\Data\dbo_Roles.csv" />
     <Content Include="Infrastructure\Migrations\Data\legacy_logs.csv" />
     <Compile Include="App_Start\Startup.Hangfire.cs" />
-    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Debug.config">
-      <Link>SecureSettings.Debug.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Release.config">
-      <Link>SecureSettings.Release.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Staging.config">
-      <Link>SecureSettings.Staging.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="C:\Projects\Monitorr.io\SecureSettings.Testing.config">
-      <Link>SecureSettings.Testing.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
