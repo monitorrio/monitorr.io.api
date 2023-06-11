@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Filters;
 using Core;
 using Glimpse.Core.Tab.Assist;
 
 namespace Web.Controllers
 {
-	using System.Net.Http;
-	using System.Web.Http.Filters;
-	public class AppExceptionFilterAttribute : ExceptionFilterAttribute
+    public class AppExceptionFilterAttribute : ExceptionFilterAttribute
 	{
 		public HttpStatusCode StatusCode { get; set; }
 		public Type ExceptionType { get; set; }

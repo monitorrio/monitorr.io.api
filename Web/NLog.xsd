@@ -700,7 +700,7 @@
           <xs:element name="dbHost" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="dbPassword" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="dbProvider" minOccurs="0" maxOccurs="1" type="xs:string" />
-          <xs:element name="dbUsername" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="dbUserName" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="keepConnection" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="useTransactions" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="installConnectionString" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -717,7 +717,7 @@
         </xs:attribute>
         <xs:attribute name="connectionString" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>Connection string. When provided, it overrides the values specified in DBHost, DBUsername, DBPassword, DBDatabase.</xs:documentation>
+            <xs:documentation>Connection string. When provided, it overrides the values specified in DBHost, DBUserName, DBPassword, DBDatabase.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="connectionStringName" type="xs:string">
@@ -745,7 +745,7 @@
             <xs:documentation>Name of the database provider.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="dbUsername" type="SimpleLayoutAttribute">
+        <xs:attribute name="dbUserName" type="SimpleLayoutAttribute">
           <xs:annotation>
             <xs:documentation>Database user name. If the ConnectionString is not provided this value will be used to construct the "User ID=" part of the connection string.</xs:documentation>
           </xs:annotation>
@@ -907,7 +907,7 @@
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="category" minOccurs="0" maxOccurs="1" type="Layout" />
-          <xs:element name="eventid" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="eventId" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="log" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="machineName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="source" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -928,7 +928,7 @@
             <xs:documentation>Layout that renders event Category.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="eventid" type="SimpleLayoutAttribute">
+        <xs:attribute name="eventId" type="SimpleLayoutAttribute">
           <xs:annotation>
             <xs:documentation>Layout that renders event ID.</xs:documentation>
           </xs:annotation>
@@ -1287,7 +1287,7 @@
   <xs:simpleType name="NLog.Targets.Wrappers.SecurityImpersonationLevel">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Anonymous" />
-      <xs:enumeration value="identification" />
+      <xs:enumeration value="Identification" />
       <xs:enumeration value="Impersonation" />
       <xs:enumeration value="Delegation" />
     </xs:restriction>
@@ -1315,7 +1315,7 @@
           <xs:element name="endpointAddress" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="endpointConfigurationName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="useOneWayContract" minOccurs="0" maxOccurs="1" type="xs:boolean" />
-          <xs:element name="clientid" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="clientId" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="includeEventProperties" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="NLog.Targets.MethodCallParameter" />
           <xs:element name="useBinaryEncoding" minOccurs="0" maxOccurs="1" type="xs:boolean" />
@@ -1340,7 +1340,7 @@
             <xs:documentation>Indicates whether to use a WCF service contract that is one way (fire and forget) or two way (request-reply)</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="clientid" type="SimpleLayoutAttribute">
+        <xs:attribute name="clientId" type="SimpleLayoutAttribute">
           <xs:annotation>
             <xs:documentation>Client ID.</xs:documentation>
           </xs:annotation>
@@ -1402,7 +1402,7 @@
           <xs:element name="timeout" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="smtpServer" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="smtpAuthentication" minOccurs="0" maxOccurs="1" type="NLog.Targets.SmtpAuthenticationMode" />
-          <xs:element name="smtpUsername" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="smtpUserName" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="smtpPassword" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="enableSsl" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="smtpPort" minOccurs="0" maxOccurs="1" type="xs:integer" />
@@ -1447,17 +1447,17 @@
         </xs:attribute>
         <xs:attribute name="cc" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>CC Email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
+            <xs:documentation>CC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="to" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>Recipients' Email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
+            <xs:documentation>Recipients' email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="bcc" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>BCC Email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
+            <xs:documentation>BCC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="body" type="SimpleLayoutAttribute">
@@ -1472,7 +1472,7 @@
         </xs:attribute>
         <xs:attribute name="from" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>Sender's Email address (e.g. joe@domain.com).</xs:documentation>
+            <xs:documentation>Sender's email address (e.g. joe@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="replaceNewlineWithBrTagInHtml" type="xs:boolean">
@@ -1500,7 +1500,7 @@
             <xs:documentation>SMTP Authentication mode.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="smtpUsername" type="SimpleLayoutAttribute">
+        <xs:attribute name="smtpUserName" type="SimpleLayoutAttribute">
           <xs:annotation>
             <xs:documentation>Username used to connect to SMTP server (used when SmtpAuthentication is set to "basic").</xs:documentation>
           </xs:annotation>
@@ -1532,7 +1532,7 @@
         </xs:attribute>
         <xs:attribute name="deliveryMethod" type="System.Net.Mail.SmtpDeliveryMethod">
           <xs:annotation>
-            <xs:documentation>Specifies how outgoing Email messages will be handled.</xs:documentation>
+            <xs:documentation>Specifies how outgoing email messages will be handled.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
       </xs:extension>
