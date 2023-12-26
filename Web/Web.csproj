@@ -438,6 +438,7 @@
     <Compile Include="Infrastructure\DataTables\DataTableResponseEx.cs" />
     <Compile Include="Infrastructure\Extensions\QueryableExtensions.cs" />
     <Compile Include="Infrastructure\PredicateBuilder.cs" />
+    <Compile Include="Infrastructure\Repositories\ActivityRepository.cs" />
     <Compile Include="Infrastructure\Repositories\NotificationRepository.cs" />
     <Compile Include="Models\ClearLogModel.cs" />
     <Compile Include="Controllers\Api\ErrorController.cs" />
